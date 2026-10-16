@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* Tokens del tablero. Se usan como clases de Tailwind: bg-bg, bg-card, text-ink, bg-accent, text-muted, bg-track */
+:root {
+  --bg: #f3efd9;
+  --card: #fbf9f1;
+  --ink: #1c1c1a;
+  --accent: #f2c94c;
+  --muted: #77746a;
+  --track: #e7e2cf;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-track: var(--track);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 16px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* Foco visible y consistente para teclado */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
