@@ -72,14 +72,6 @@ export const projects: Project[] = [
     area: "datos",
   },
   {
-    slug: "portal-asistencia",
-    nombre: "Portal de asistencia",
-    descripcion: "TODO: descripción de Jorge.",
-    herramientas: ["Web"],
-    estado: "en-curso",
-    area: "automatizacion", // TODO: confirmar área con Jorge
-  },
-  {
     slug: "comparador-supermercados",
     nombre: "Comparador de precios de supermercados",
     descripcion: "TODO: descripción de Jorge.",
