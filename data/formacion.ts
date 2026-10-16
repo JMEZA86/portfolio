@@ -10,7 +10,7 @@ export type Formacion = {
 
 export type Conocimiento = {
   nombre: string;
-  nivel: string;
+  nivel?: string; // si falta, se muestra solo el nombre
 };
 
 export const formacion: Formacion[] = [
@@ -26,6 +26,7 @@ export const conocimientos: Conocimiento[] = [
   { nombre: "Power BI", nivel: "Intermedio-avanzado" },
   { nombre: "Excel", nivel: "Avanzado" },
   { nombre: "Automatizaciones con Python", nivel: "Asistidas con IA" },
+  { nombre: "Power Automate" }, // TODO: nivel
 ];
 
 // Pendientes que se muestran solo con `npm run dev`.
