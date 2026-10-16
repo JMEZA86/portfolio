@@ -1,38 +1,16 @@
+import { BarraSuperior } from "@/components/BarraSuperior";
 import { Card, Pendiente } from "@/components/Card";
 import { DevTodo } from "@/components/DevTodo";
 import { persona } from "@/data/experiencia";
 import { pendientesFormacion } from "@/data/formacion";
 
-const menu = [
-  { href: "#resumen", label: "Resumen" },
-  { href: "#proyectos", label: "Proyectos" },
-  { href: "#carrera", label: "Carrera" },
-  { href: "#contacto", label: "Contacto" },
-];
-
 export default function Home() {
   return (
     <div className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
       {/* 1. Barra superior */}
-      <header className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-bg/90 py-4 backdrop-blur">
-        <a href="#resumen" className="rounded-full bg-card px-4 py-2 text-sm font-semibold">
-          {persona.nombre}
-        </a>
-        <nav aria-label="Secciones" className="text-sm">
-          {/* TODO: armar menú real (paso 1) */}
-          <ul className="flex gap-1">
-            {menu.map((m) => (
-              <li key={m.href}>
-                <a href={m.href} className="rounded-full px-3 py-2 hover:bg-card">
-                  {m.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
+      <BarraSuperior nombre={persona.nombre} />
 
-      <main className="space-y-4">
+      <main className="mt-2 space-y-4">
         <DevTodo items={pendientesFormacion} />
 
         {/* 2–3. Saludo + barra de balance */}

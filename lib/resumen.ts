@@ -1,7 +1,7 @@
 // Números derivados de data/. Ningún componente escribe cifras a mano.
-import { projects, type Area } from "@/data/projects";
+import { proyectosPublicados as projects, type Area } from "@/data/projects";
 import { experiencia } from "@/data/experiencia";
-import { formacion } from "@/data/formacion";
+import { conocimientos } from "@/data/formacion";
 import { duracion } from "@/lib/fechas";
 
 export function experienciaTotal() {
@@ -15,7 +15,7 @@ export function resumen() {
   return {
     anios: experienciaTotal().anios,
     proyectos: projects.length,
-    certificaciones: formacion.filter((f) => f.tipo === "certificacion").length,
+    conocimientos: conocimientos.length, // TODO: definir el tercer número del saludo
   };
 }
 
