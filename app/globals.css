@@ -44,6 +44,11 @@ body {
   border-radius: 6px;
 }
 
+/* Tramos del anillo de experiencia: largo en % de la vuelta (pathLength=100) */
+[data-tramo] {
+  stroke-dasharray: var(--largo) 100;
+}
+
 /* Revelado al entrar en pantalla (ver components/useRevelar.ts).
    Solo con JS (clase .js en <html>) y sin prefers-reduced-motion. */
 @media (prefers-reduced-motion: no-preference) {
@@ -53,5 +58,12 @@ body {
   }
   .js [data-revelar="barra"]:not([data-visible]) > [data-relleno] {
     clip-path: inset(0 100% 0 0);
+  }
+
+  .js [data-revelar="anillo"] [data-tramo] {
+    transition: stroke-dasharray 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--retraso);
+  }
+  .js [data-revelar="anillo"]:not([data-visible]) [data-tramo] {
+    stroke-dasharray: 0 100;
   }
 }

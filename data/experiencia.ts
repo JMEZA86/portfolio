@@ -3,6 +3,7 @@
 
 export type Puesto = {
   cargo: string;
+  cargoCorto: string; // para gráficos con poco espacio
   organizacion: string;
   desde: string;
   hasta: string | null;
@@ -35,6 +36,7 @@ export const persona = {
 export const experiencia: Puesto[] = [
   {
     cargo: "Cajero",
+    cargoCorto: "Cajero",
     organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
     desde: "2012-05",
     hasta: "2020-08",
@@ -42,6 +44,7 @@ export const experiencia: Puesto[] = [
   },
   {
     cargo: "Auxiliar administrativo de Tesorería",
+    cargoCorto: "Tesorería",
     organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
     desde: "2020-08",
     hasta: "2022-09",
@@ -49,6 +52,7 @@ export const experiencia: Puesto[] = [
   },
   {
     cargo: "Analista de Presupuesto y Control Presupuestario",
+    cargoCorto: "Analista de Presupuesto",
     organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
     desde: "2022-09",
     hasta: null,

@@ -1,7 +1,7 @@
 // Números derivados de data/. Ningún componente escribe cifras a mano.
 import { proyectosPublicados as projects, type Area } from "@/data/projects";
 import { experiencia } from "@/data/experiencia";
-import { duracion } from "@/lib/fechas";
+import { duracion, formatoCorto } from "@/lib/fechas";
 
 export function experienciaTotal() {
   const desde = experiencia.map((p) => p.desde).sort()[0];
@@ -44,4 +44,14 @@ export function balance() {
     automatizacion: { label: "Automatización", cantidad: automatizacion, porcentaje: pa },
     datos: { label: "Datos", cantidad: datos, porcentaje: 100 - pa },
   };
+}
+
+// Tramos del anillo: un tramo por puesto, en orden cronológico.
+export function tramosExperiencia() {
+  return [...experiencia]
+    .sort((a, b) => a.desde.localeCompare(b.desde))
+    .map((p) => {
+      const d = duracion(p.desde, p.hasta);
+      return { cargo: p.cargoCorto, meses: d.totalMeses, texto: formatoCorto(d) };
+    });
 }

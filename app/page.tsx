@@ -1,3 +1,4 @@
+import { AnilloExperiencia } from "@/components/AnilloExperiencia";
 import { Balance } from "@/components/Balance";
 import { BarraSuperior } from "@/components/BarraSuperior";
 import { Card, Pendiente } from "@/components/Card";
@@ -6,7 +7,8 @@ import { Perfil } from "@/components/Perfil";
 import { Saludo } from "@/components/Saludo";
 import { persona } from "@/data/experiencia";
 import { pendientesFormacion } from "@/data/formacion";
-import { balance } from "@/lib/resumen";
+import { formatoCorto } from "@/lib/fechas";
+import { balance, experienciaTotal, tramosExperiencia } from "@/lib/resumen";
 
 export default function Home() {
   return (
@@ -32,7 +34,7 @@ export default function Home() {
           </Card>
           {/* 5. Anillo de experiencia */}
           <Card>
-            <Pendiente titulo="Experiencia" detalle="Anillo animado con el total calculado." />
+            <AnilloExperiencia tramos={tramosExperiencia()} total={formatoCorto(experienciaTotal())} />
           </Card>
           {/* 6. Herramientas */}
           <Card className="lg:col-span-2">
