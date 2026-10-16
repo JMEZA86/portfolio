@@ -42,7 +42,7 @@ export const experiencia: Puesto[] = [
     cargoCorto: "Supervisor",
     organizacion: "Starbucks",
     desde: "2009-11",
-    hasta: "2011-05",
+    hasta: "2012-05",
     tareas: [], // TODO: 2 o 3 tareas que cuente Jorge
   },
   {
