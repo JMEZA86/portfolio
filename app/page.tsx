@@ -3,12 +3,13 @@ import { Balance } from "@/components/Balance";
 import { BarraSuperior } from "@/components/BarraSuperior";
 import { Card, Pendiente } from "@/components/Card";
 import { DevTodo } from "@/components/DevTodo";
+import { Herramientas } from "@/components/Herramientas";
 import { Perfil } from "@/components/Perfil";
 import { Saludo } from "@/components/Saludo";
 import { persona } from "@/data/experiencia";
 import { pendientesFormacion } from "@/data/formacion";
 import { formatoCorto } from "@/lib/fechas";
-import { balance, experienciaTotal, tramosExperiencia } from "@/lib/resumen";
+import { balance, experienciaTotal, tramosExperiencia, usoDeHerramientas } from "@/lib/resumen";
 
 export default function Home() {
   return (
@@ -38,7 +39,7 @@ export default function Home() {
           </Card>
           {/* 6. Herramientas */}
           <Card className="lg:col-span-2">
-            <Pendiente titulo="Herramientas" detalle="Barras verticales: proyectos por herramienta." />
+            <Herramientas usos={usoDeHerramientas()} />
           </Card>
           {/* 7. Proyectos */}
           <Card id="proyectos" oscura className="sm:col-span-2 lg:col-span-1 lg:row-span-2">

@@ -6,7 +6,7 @@
   --card: #fbf9f1;
   --ink: #1c1c1a;
   --accent: #f2c94c;
-  --muted: #77746a;
+  --muted: #67645a; /* brief: #77746a; oscurecido para contraste AA (4.4 → 5.6 sobre card) */
   --track: #e7e2cf;
 }
 
@@ -65,5 +65,21 @@ body {
   }
   .js [data-revelar="anillo"]:not([data-visible]) [data-tramo] {
     stroke-dasharray: 0 100;
+  }
+
+  .js [data-revelar="barras"] [data-barra] {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--retraso);
+  }
+  .js [data-revelar="barras"] [data-barra="v"] {
+    transform-origin: bottom;
+  }
+  .js [data-revelar="barras"] [data-barra="h"] {
+    transform-origin: left;
+  }
+  .js [data-revelar="barras"]:not([data-visible]) [data-barra="v"] {
+    transform: scaleY(0);
+  }
+  .js [data-revelar="barras"]:not([data-visible]) [data-barra="h"] {
+    transform: scaleX(0);
   }
 }
