@@ -6,6 +6,7 @@ export type Puesto = {
   organizacion: string;
   desde: string;
   hasta: string | null;
+  tareas: string[]; // se muestran en el detalle de la línea de carrera
   proyeccion?: false;
 };
 
@@ -19,11 +20,16 @@ export type Proyeccion = {
 export const persona = {
   nombre: "Jorge Meza",
   saludo: "Hola, soy Jorge",
+  nombreCompleto: "Jorge Ismael Meza",
+  ubicacion: "Buenos Aires, Argentina",
+  // TODO: el CV dice "Control de Gestión" y el brief "Control Presupuestario". Unificar.
   cargoActual: "Analista de Presupuesto y Control Presupuestario",
+  perfil:
+    "Licenciado en Administración con experiencia en control de gestión, planificación presupuestaria y análisis financiero. Perfil analítico, con foco en automatización y mejora continua.",
   disponible: "Disponible · Data Analytics",
   foto: "/jorge.png",
-  linkedin: "https://www.linkedin.com/in/TODO", // TODO: URL real de LinkedIn
-  email: "TODO@ejemplo.com", // TODO: mail de contacto público que quieras mostrar
+  linkedin: "https://www.linkedin.com/in/jorge-meza",
+  email: "mezajorgeismael@gmail.com", // del CV; el teléfono no se publica
 };
 
 export const experiencia: Puesto[] = [
@@ -32,18 +38,27 @@ export const experiencia: Puesto[] = [
     organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
     desde: "2012-05",
     hasta: "2020-08",
+    tareas: ["Manejo de caja", "Operaciones contables básicas", "Atención al público"],
   },
   {
     cargo: "Auxiliar administrativo de Tesorería",
     organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
     desde: "2020-08",
     hasta: "2022-09",
+    tareas: ["Gestión de pagos a proveedores", "Conciliaciones bancarias", "Control de flujos de caja"],
   },
   {
     cargo: "Analista de Presupuesto y Control Presupuestario",
     organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
     desde: "2022-09",
     hasta: null,
+    tareas: [
+      "Planificación y control de la ejecución presupuestaria anual",
+      "Análisis de desvíos y variaciones mensuales",
+      "Informes de gestión para la Dirección",
+      "Seguimiento de indicadores financieros y operativos",
+      "Automatización de reportes con Excel, Power Query y DAX",
+    ],
   },
 ];
 
@@ -56,3 +71,21 @@ export const forecast: Proyeccion = {
 
 // Rango del eje del Gantt
 export const ejeCarrera = { desde: 2012, hasta: 2028 };
+
+// Del CV. Por ahora no tienen sección propia; quedan disponibles para el perfil o el chat de la fase 2.
+export const habilidades = [
+  "Control de Gestión",
+  "Planificación Presupuestaria",
+  "Reporting Ejecutivo",
+  "Excel Avanzado",
+  "Power BI",
+  "Power Query",
+  "SQL",
+  "SAP",
+  "Automatización de Procesos",
+];
+
+export const idiomas = [
+  { idioma: "Español", nivel: "Nativo" },
+  { idioma: "Inglés", nivel: "Intermedio (B1)" },
+];
