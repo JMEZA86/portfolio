@@ -2,6 +2,7 @@ import { Balance } from "@/components/Balance";
 import { BarraSuperior } from "@/components/BarraSuperior";
 import { Card, Pendiente } from "@/components/Card";
 import { DevTodo } from "@/components/DevTodo";
+import { Perfil } from "@/components/Perfil";
 import { Saludo } from "@/components/Saludo";
 import { persona } from "@/data/experiencia";
 import { pendientesFormacion } from "@/data/formacion";
@@ -23,7 +24,7 @@ export default function Home() {
           </Card>
           {/* 4. Perfil */}
           <Card className="sm:col-span-2 lg:col-span-1 lg:row-span-2">
-            <Pendiente titulo="Perfil" detalle="Foto, nombre, cargo y etiqueta Disponible." />
+            <Perfil />
           </Card>
           {/* 3. Barra de balance */}
           <Card className="sm:col-span-2 lg:col-span-3">
