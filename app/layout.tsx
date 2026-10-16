@@ -16,7 +16,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-AR" className={`${inter.variable} antialiased`}>
+    <html lang="es-AR" className={`${inter.variable} antialiased`} suppressHydrationWarning>
+      <head>
+        {/* Habilita las animaciones CSS de revelado solo si hay JavaScript */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className="min-h-dvh font-sans">
         <MotionProvider>{children}</MotionProvider>
       </body>

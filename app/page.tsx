@@ -1,9 +1,11 @@
+import { Balance } from "@/components/Balance";
 import { BarraSuperior } from "@/components/BarraSuperior";
 import { Card, Pendiente } from "@/components/Card";
 import { DevTodo } from "@/components/DevTodo";
 import { Saludo } from "@/components/Saludo";
 import { persona } from "@/data/experiencia";
 import { pendientesFormacion } from "@/data/formacion";
+import { balance } from "@/lib/resumen";
 
 export default function Home() {
   return (
@@ -25,7 +27,7 @@ export default function Home() {
           </Card>
           {/* 3. Barra de balance */}
           <Card className="sm:col-span-2 lg:col-span-3">
-            <Pendiente titulo="Barra de balance" detalle="Automatización vs. datos, calculado desde data/projects.ts." />
+            <Balance {...balance()} />
           </Card>
           {/* 5. Anillo de experiencia */}
           <Card>

@@ -43,3 +43,15 @@ body {
   outline-offset: 3px;
   border-radius: 6px;
 }
+
+/* Revelado al entrar en pantalla (ver components/useRevelar.ts).
+   Solo con JS (clase .js en <html>) y sin prefers-reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revelar="barra"] > [data-relleno] {
+    clip-path: inset(0 0 0 0); /* "none" no se puede interpolar */
+    transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .js [data-revelar="barra"]:not([data-visible]) > [data-relleno] {
+    clip-path: inset(0 100% 0 0);
+  }
+}

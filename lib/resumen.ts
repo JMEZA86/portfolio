@@ -33,3 +33,15 @@ export function usoDeHerramientas(): { herramienta: string; proyectos: number }[
     .map(([herramienta, n]) => ({ herramienta, proyectos: n }))
     .sort((a, b) => b.proyectos - a.proyectos || a.herramienta.localeCompare(b.herramienta));
 }
+
+// Porcentajes enteros que siempre suman 100.
+export function balance() {
+  const { automatizacion, datos } = balancePorArea();
+  const total = automatizacion + datos || 1;
+  const a = (automatizacion / total) * 100;
+  const pa = a - Math.floor(a) >= 0.5 ? Math.ceil(a) : Math.floor(a);
+  return {
+    automatizacion: { label: "Automatización", cantidad: automatizacion, porcentaje: pa },
+    datos: { label: "Datos", cantidad: datos, porcentaje: 100 - pa },
+  };
+}
