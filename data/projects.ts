@@ -85,8 +85,8 @@ export const projects: Project[] = [
     descripcion: "TODO: descripción de Jorge.",
     herramientas: ["IA", "Mapas"],
     estado: "en-curso",
-    area: "datos", // TODO: confirmar área con Jorge
-    // Link de demo: no se publica por ahora.
+    area: "datos",
+    oculto: true, // todavía no funciona: no se publica por ahora
   },
   {
     slug: "contar-con-datos-2026",
