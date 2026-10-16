@@ -1,53 +1,48 @@
 "use client";
 
 import { useRevelar } from "@/components/useRevelar";
+import type { Herramienta, Nivel } from "@/data/formacion";
 
-type Uso = { herramienta: string; proyectos: number };
+const NIVELES: Record<Nivel, { pasos: number; texto: string }> = {
+  basico: { pasos: 1, texto: "Básico" },
+  intermedio: { pasos: 2, texto: "Intermedio" },
+  avanzado: { pasos: 3, texto: "Avanzado" },
+};
 
-// Proyectos por herramienta. Barras verticales en escritorio, horizontales en pantallas chicas.
-export function Herramientas({ usos }: { usos: Uso[] }) {
+// Herramientas con nivel de conocimiento en una escala de 3 pasos.
+export function Herramientas({ items }: { items: Herramienta[] }) {
   const ref = useRevelar<HTMLDivElement>(0.3);
-  const max = Math.max(...usos.map((u) => u.proyectos), 1);
-  const pct = (n: number) => `${(n / max) * 100}%`;
-  const retraso = (i: number) => ({ "--retraso": `${i * 0.05}s` }) as React.CSSProperties;
 
   return (
     <div ref={ref} data-revelar="barras">
       <h2 className="text-lg font-semibold tracking-tight">Herramientas</h2>
-      <p className="text-[13px] text-muted">Cantidad de proyectos que usan cada una</p>
-
-      {/* Celular y tablet: horizontales */}
-      <ul className="mt-4 space-y-2 lg:hidden">
-        {usos.map((u, i) => (
-          <li key={u.herramienta} className="grid grid-cols-[7.5rem_1fr_1.5rem] items-center gap-2 text-[13px]">
-            <span className="truncate">{u.herramienta}</span>
-            <span className="h-3 rounded-full bg-track">
-              <span
-                data-barra="h"
-                className="block h-full rounded-full bg-ink"
-                style={{ width: pct(u.proyectos), ...retraso(i) }}
-              />
-            </span>
-            <span className="text-right font-semibold tabular-nums">{u.proyectos}</span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Escritorio: verticales */}
-      <ul className="mt-5 hidden items-end gap-1.5 lg:flex">
-        {usos.map((u, i) => (
-          <li key={u.herramienta} className="flex min-w-0 flex-1 flex-col items-center">
-            <span className="text-[11px] font-semibold tabular-nums">{u.proyectos}</span>
-            <span className="mt-1 flex h-28 w-full max-w-7 items-end">
-              <span
-                data-barra="v"
-                className="block w-full rounded-t-md rounded-b-sm bg-ink"
-                style={{ height: pct(u.proyectos), ...retraso(i) }}
-              />
-            </span>
-            <span className="mt-2 h-7 text-center text-[10px] leading-tight text-muted">{u.herramienta}</span>
-          </li>
-        ))}
+      <p className="text-[13px] text-muted">Nivel de conocimiento</p>
+      <ul className="mt-4 space-y-3">
+        {items.map((h, i) => {
+          const { pasos, texto } = NIVELES[h.nivel];
+          return (
+            <li key={h.nombre} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1.5 text-sm">
+              <span className="font-medium">
+                {h.nombre}
+                {h.detalle && <span className="font-normal text-muted"> · {h.detalle}</span>}
+              </span>
+              <span className="text-[13px] text-muted">{texto}</span>
+              <span aria-hidden className="col-span-2 grid grid-cols-3 gap-1">
+                {[1, 2, 3].map((n) => (
+                  <span key={n} className="h-2 overflow-hidden rounded-full bg-track">
+                    {n <= pasos && (
+                      <span
+                        data-barra="h"
+                        className="block size-full rounded-full bg-ink"
+                        style={{ "--retraso": `${i * 0.06 + n * 0.12}s` } as React.CSSProperties}
+                      />
+                    )}
+                  </span>
+                ))}
+              </span>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

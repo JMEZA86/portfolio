@@ -39,6 +39,7 @@ export function Perfil() {
         <p className="mt-3 inline-block rounded-full bg-accent px-3 py-1.5 text-xs font-semibold text-ink">
           {persona.disponible}
         </p>
+        <p className="mt-4 hidden text-left text-[13px] leading-relaxed text-muted lg:block">{persona.perfil}</p>
       </div>
     </div>
   );

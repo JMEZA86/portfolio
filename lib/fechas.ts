@@ -27,3 +27,10 @@ export function formatoLargo({ anios, meses }: Duracion): string {
   if (!meses) return a;
   return `${a} ${meses} ${meses === 1 ? "mes" : "meses"}`;
 }
+
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+export function formatoMes(fecha: string): string {
+  const [a, m] = fecha.split("-").map(Number);
+  return `${MESES[m - 1]} ${a}`;
+}

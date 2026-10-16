@@ -1,4 +1,4 @@
-// Educación y conocimientos. Se muestran como movimientos de un extracto, marcados como "Inversión".
+// Educación y herramientas. La educación se muestra como movimientos de un extracto, marcados como "Inversión".
 // Las certificaciones de Coderhouse (Tableau, Data Analytics) se sacaron: ya no están vigentes.
 
 export type Formacion = {
@@ -8,9 +8,12 @@ export type Formacion = {
   fecha: string; // año de cierre
 };
 
-export type Conocimiento = {
+export type Nivel = "basico" | "intermedio" | "avanzado";
+
+export type Herramienta = {
   nombre: string;
-  detalle?: string; // aclaración opcional (no se usan niveles)
+  nivel: Nivel; // autoevaluación de Jorge
+  detalle?: string;
 };
 
 export const formacion: Formacion[] = [
@@ -22,11 +25,16 @@ export const formacion: Formacion[] = [
   },
 ];
 
-export const conocimientos: Conocimiento[] = [
-  { nombre: "Power BI" },
-  { nombre: "Excel" },
-  { nombre: "Automatizaciones con Python", detalle: "Asistidas con IA" },
-  { nombre: "Power Automate" },
+// Herramientas con nivel de conocimiento. Se muestran en la sección "Herramientas".
+export const herramientas: Herramienta[] = [
+  { nombre: "Excel", nivel: "avanzado" },
+  { nombre: "Power Query", nivel: "avanzado" },
+  { nombre: "Power BI", nivel: "intermedio" },
+  { nombre: "DAX", nivel: "intermedio" },
+  { nombre: "Python", nivel: "intermedio", detalle: "con IA" },
+  { nombre: "Power Automate", nivel: "intermedio" },
+  { nombre: "SAP FI/CO", nivel: "intermedio" },
+  { nombre: "SQL", nivel: "basico" },
 ];
 
 // Pendientes que se muestran solo con `npm run dev`.

@@ -1,6 +1,7 @@
 // Números derivados de data/. Ningún componente escribe cifras a mano.
 import { proyectosPublicados as projects, type Area } from "@/data/projects";
 import { experiencia } from "@/data/experiencia";
+import { herramientas } from "@/data/formacion";
 import { duracion, formatoCorto } from "@/lib/fechas";
 
 export function experienciaTotal() {
@@ -14,7 +15,7 @@ export function resumen() {
   return {
     anios: experienciaTotal().anios,
     proyectos: projects.length,
-    herramientas: usoDeHerramientas().length,
+    herramientas: herramientas.length,
   };
 }
 
@@ -23,15 +24,6 @@ export function balancePorArea(): Record<Area, number> {
     (acc, p) => ({ ...acc, [p.area]: acc[p.area] + 1 }),
     { automatizacion: 0, datos: 0 },
   );
-}
-
-export function usoDeHerramientas(): { herramienta: string; proyectos: number }[] {
-  const conteo = new Map<string, number>();
-  for (const p of projects)
-    for (const h of p.herramientas) conteo.set(h, (conteo.get(h) ?? 0) + 1);
-  return [...conteo]
-    .map(([herramienta, n]) => ({ herramienta, proyectos: n }))
-    .sort((a, b) => b.proyectos - a.proyectos || a.herramienta.localeCompare(b.herramienta));
 }
 
 // Porcentajes enteros que siempre suman 100.

@@ -12,7 +12,7 @@ export function Saludo() {
 
   return (
     <>
-      <p className="text-sm font-medium text-muted">Resumen</p>
+      <p className="text-sm font-medium text-muted">{persona.ubicacion}</p>
       <h1 className="mt-2 text-[2.5rem] font-bold leading-none tracking-[-0.04em] sm:text-6xl">
         {persona.saludo}
       </h1>
