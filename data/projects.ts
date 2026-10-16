@@ -35,7 +35,7 @@ export const projects: Project[] = [
     slug: "pagos-power-automate",
     nombre: "Pagos con Power Automate",
     descripcion: "TODO: descripción de Jorge.",
-    herramientas: ["Power Automate", "Python", "Graph API", "IA"],
+    herramientas: ["Power Automate", "Python", "Graph API", "SharePoint", "Outlook", "IA"],
     estado: "terminado",
     area: "automatizacion",
   },
