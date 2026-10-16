@@ -40,20 +40,30 @@ export function Puestos() {
       </div>
 
       <div className="mt-2 divide-y divide-track">
-        {anteriores.map((p) => (
-          <details key={p.cargo} className="group py-3">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md [&::-webkit-details-marker]:hidden">
-              <span className="min-w-0">
-                <span className="block font-medium">{p.cargo}</span>
-                <Periodo desde={p.desde} hasta={p.hasta} />
+        {anteriores.map((p) => {
+          const titulo = (
+            <span className="min-w-0">
+              <span className="block font-medium">
+                {p.cargo}
+                {p.organizacion !== actual.organizacion && <span className="font-normal text-muted"> · {p.organizacion}</span>}
               </span>
-              <svg aria-hidden viewBox="0 0 16 16" className="size-4 shrink-0 transition-transform group-open:rotate-180">
-                <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.75" fill="none" strokeLinecap="round" />
-              </svg>
-            </summary>
-            <Tareas tareas={p.tareas} />
-          </details>
-        ))}
+              <Periodo desde={p.desde} hasta={p.hasta} />
+            </span>
+          );
+          // Sin tareas cargadas no hay nada que desplegar
+          if (p.tareas.length === 0) return <div key={p.cargo} className="py-3">{titulo}</div>;
+          return (
+            <details key={p.cargo} className="group py-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md [&::-webkit-details-marker]:hidden">
+                {titulo}
+                <svg aria-hidden viewBox="0 0 16 16" className="size-4 shrink-0 transition-transform group-open:rotate-180">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.75" fill="none" strokeLinecap="round" />
+                </svg>
+              </summary>
+              <Tareas tareas={p.tareas} />
+            </details>
+          );
+        })}
       </div>
     </>
   );

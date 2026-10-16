@@ -1,19 +1,32 @@
 // Números derivados de data/. Ningún componente escribe cifras a mano.
 import { proyectosPublicados as projects, type Area } from "@/data/projects";
-import { experiencia } from "@/data/experiencia";
+import { CONSEJO, experiencia, type Puesto } from "@/data/experiencia";
 import { herramientas } from "@/data/formacion";
-import { duracion, formatoCorto } from "@/lib/fechas";
+import { duracion, formatoCorto, mesActual } from "@/lib/fechas";
 
+const enConsejo = (p: Puesto) => p.organizacion === CONSEJO;
+
+// Tiempo en el Consejo: de la primera fecha de ingreso a hoy (o al último egreso).
 export function experienciaTotal() {
-  const desde = experiencia.map((p) => p.desde).sort()[0];
-  const actual = experiencia.find((p) => p.hasta === null);
-  const hasta = actual ? null : experiencia.map((p) => p.hasta!).sort().at(-1)!;
+  const puestos = experiencia.filter(enConsejo);
+  const desde = puestos.map((p) => p.desde).sort()[0];
+  const actual = puestos.find((p) => p.hasta === null);
+  const hasta = actual ? null : puestos.map((p) => p.hasta!).sort().at(-1)!;
   return duracion(desde, hasta);
+}
+
+// Experiencia laboral total: meses trabajados, sin contar dos veces los meses de cambio de puesto.
+export function experienciaLaboral() {
+  const meses = new Set<number>();
+  const indice = (f: string) => Number(f.slice(0, 4)) * 12 + Number(f.slice(5, 7)) - 1;
+  for (const p of experiencia)
+    for (let m = indice(p.desde); m <= indice(p.hasta ?? mesActual()); m++) meses.add(m);
+  return { anios: Math.floor(meses.size / 12), meses: meses.size % 12, totalMeses: meses.size };
 }
 
 export function resumen() {
   return {
-    anios: experienciaTotal().anios,
+    anios: experienciaLaboral().anios,
     proyectos: projects.length,
     herramientas: herramientas.length,
   };
@@ -40,7 +53,8 @@ export function balance() {
 
 // Tramos del anillo: un tramo por puesto, en orden cronológico.
 export function tramosExperiencia() {
-  return [...experiencia]
+  return experiencia
+    .filter(enConsejo)
     .sort((a, b) => a.desde.localeCompare(b.desde))
     .map((p) => {
       const d = duracion(p.desde, p.hasta);

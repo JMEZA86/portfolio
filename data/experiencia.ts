@@ -33,11 +33,22 @@ export const persona = {
   email: "mezajorgeismael@gmail.com", // del CV; el teléfono no se publica
 };
 
+// Organización del anillo "en el Consejo"
+export const CONSEJO = "Consejo Profesional de Ciencias Económicas de la CABA";
+
 export const experiencia: Puesto[] = [
+  {
+    cargo: "Supervisor",
+    cargoCorto: "Supervisor",
+    organizacion: "Starbucks",
+    desde: "2009-11",
+    hasta: "2011-05",
+    tareas: [], // TODO: 2 o 3 tareas que cuente Jorge
+  },
   {
     cargo: "Cajero",
     cargoCorto: "Cajero",
-    organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
+    organizacion: CONSEJO,
     desde: "2012-05",
     hasta: "2020-08",
     tareas: ["Manejo de caja", "Operaciones contables básicas", "Atención al público"],
@@ -45,7 +56,7 @@ export const experiencia: Puesto[] = [
   {
     cargo: "Auxiliar administrativo de Tesorería",
     cargoCorto: "Tesorería",
-    organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
+    organizacion: CONSEJO,
     desde: "2020-08",
     hasta: "2022-09",
     tareas: ["Gestión de pagos a proveedores", "Conciliaciones bancarias", "Control de flujos de caja"],
@@ -53,7 +64,7 @@ export const experiencia: Puesto[] = [
   {
     cargo: "Analista de Presupuesto y Control Presupuestario",
     cargoCorto: "Analista de Presupuesto",
-    organizacion: "Consejo Profesional de Ciencias Económicas de la CABA",
+    organizacion: CONSEJO,
     desde: "2022-09",
     hasta: null,
     tareas: [
@@ -74,7 +85,7 @@ export const forecast: Proyeccion = {
 };
 
 // Rango del eje del Gantt
-export const ejeCarrera = { desde: 2012, hasta: 2028 };
+export const ejeCarrera = { desde: 2009, hasta: 2028 };
 
 // Del CV. Por ahora no tienen sección propia; quedan disponibles para el perfil o el chat de la fase 2.
 export const habilidades = [
