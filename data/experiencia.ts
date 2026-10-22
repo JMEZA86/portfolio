@@ -13,7 +13,7 @@ export type Puesto = {
 
 export type Proyeccion = {
   cargo: string;
-  desde: string;
+  desde: string | null; // null = arranca el mes siguiente al actual
   hasta: string;
   proyeccion: true; // tramo de forecast: se pinta en amarillo
 };
@@ -79,7 +79,7 @@ export const experiencia: Puesto[] = [
 
 export const forecast: Proyeccion = {
   cargo: "Data Analyst",
-  desde: "2027-01", // TODO: confirmar inicio del tramo proyectado
+  desde: null,
   hasta: "2028-12",
   proyeccion: true,
 };

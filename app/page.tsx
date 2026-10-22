@@ -1,6 +1,7 @@
 import { AnilloExperiencia } from "@/components/AnilloExperiencia";
 import { Balance } from "@/components/Balance";
 import { BarraSuperior } from "@/components/BarraSuperior";
+import { Carrera } from "@/components/Carrera";
 import { Card, Pendiente } from "@/components/Card";
 import { DevTodo } from "@/components/DevTodo";
 import { Herramientas } from "@/components/Herramientas";
@@ -10,7 +11,7 @@ import { Saludo } from "@/components/Saludo";
 import { persona } from "@/data/experiencia";
 import { herramientas, pendientesFormacion } from "@/data/formacion";
 import { formatoCorto } from "@/lib/fechas";
-import { balance, experienciaTotal, tramosExperiencia } from "@/lib/resumen";
+import { balance, experienciaTotal, lineaDeCarrera, tramosExperiencia } from "@/lib/resumen";
 
 export default function Home() {
   return (
@@ -37,7 +38,7 @@ export default function Home() {
             <Puestos />
           </Card>
           <Card id="carrera" className="sm:col-span-2 lg:col-span-4">
-            <Pendiente titulo="Carrera y forecast" detalle="Gantt 2012–2028 con tramo proyectado en amarillo." />
+            <Carrera {...lineaDeCarrera()} />
           </Card>
 
           {/* Herramientas y proyectos */}

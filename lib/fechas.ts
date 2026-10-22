@@ -13,6 +13,10 @@ export function mesActual(hoy = new Date()): string {
   return `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}`;
 }
 
+export function mesSiguiente(hoy = new Date()): string {
+  return mesActual(new Date(hoy.getFullYear(), hoy.getMonth() + 1, 1));
+}
+
 export function duracion(desde: string, hasta: string | null): Duracion {
   const total = aIndiceMes(hasta ?? mesActual()) - aIndiceMes(desde) + 1;
   return { anios: Math.floor(total / 12), meses: total % 12, totalMeses: total };
