@@ -5,11 +5,12 @@ import { persona } from "@/data/experiencia";
 
 // Se resuelve al hacer el build: si public/jorge.png no existe, va la silueta.
 // Subir la foto dispara un nuevo deploy, así que se actualiza sola.
+// El contenedor necesita posición (relative/absolute) desde className.
 const hayFoto = fs.existsSync(path.join(process.cwd(), "public", persona.foto));
 
 export function Foto({ className = "", sizes }: { className?: string; sizes: string }) {
   return (
-    <div className={`relative flex items-end justify-center overflow-hidden rounded-xl bg-track ${className}`}>
+    <div className={`flex items-end justify-center overflow-hidden bg-track ${className}`}>
       {hayFoto ? (
         <Image
           src={persona.foto}

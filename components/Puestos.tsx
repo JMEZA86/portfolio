@@ -11,7 +11,7 @@ function Periodo({ desde, hasta }: { desde: string; hasta: string | null }) {
 
 function Tareas({ tareas }: { tareas: string[] }) {
   return (
-    <ul className="mt-2 space-y-1 text-[13px] leading-snug">
+    <ul className="mt-2 grid gap-x-5 gap-y-1 text-[13px] leading-snug lg:grid-cols-2">
       {tareas.map((t) => (
         <li key={t} className="flex gap-2">
           <span aria-hidden className="mt-[0.4rem] size-1.5 shrink-0 rounded-full bg-accent" />
@@ -42,7 +42,7 @@ export function Puestos() {
       <div className="mt-1 divide-y divide-track">
         {anteriores.map((p) => {
           const titulo = (
-            <span className="min-w-0">
+            <span className="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-x-3">
               <span className="block text-sm font-medium">
                 {p.cargo}
                 {p.organizacion !== actual.organizacion && <span className="font-normal text-muted"> · {p.organizacion}</span>}
@@ -51,9 +51,9 @@ export function Puestos() {
             </span>
           );
           // Sin tareas cargadas no hay nada que desplegar
-          if (p.tareas.length === 0) return <div key={p.cargo} className="py-2.5">{titulo}</div>;
+          if (p.tareas.length === 0) return <div key={p.cargo} className="flex py-2">{titulo}</div>;
           return (
-            <details key={p.cargo} className="group py-2.5">
+            <details key={p.cargo} className="group py-2">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md [&::-webkit-details-marker]:hidden">
                 {titulo}
                 <svg aria-hidden viewBox="0 0 16 16" className="size-4 shrink-0 transition-transform group-open:rotate-180">

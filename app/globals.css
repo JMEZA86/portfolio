@@ -44,6 +44,11 @@ body {
   border-radius: 6px;
 }
 
+/* Tramo proyectado: amarillo rayado (como "en construcción") */
+.rayado {
+  background: repeating-linear-gradient(-45deg, var(--accent) 0 6px, #e5bb3f 6px 9px);
+}
+
 /* Tramos del anillo de experiencia: largo en % de la vuelta (pathLength=100) */
 [data-tramo] {
   stroke-dasharray: var(--largo) 100;

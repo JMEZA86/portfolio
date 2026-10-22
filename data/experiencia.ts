@@ -86,9 +86,6 @@ export const forecast: Proyeccion = {
   proyeccion: true,
 };
 
-// Rango del eje del Gantt
-export const ejeCarrera = { desde: 2009, hasta: 2028 };
-
 // Del CV. Por ahora no tienen sección propia; quedan disponibles para el perfil o el chat de la fase 2.
 export const habilidades = [
   "Control de Gestión",

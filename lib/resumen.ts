@@ -1,8 +1,7 @@
 // Números derivados de data/. Ningún componente escribe cifras a mano.
 import { proyectosPublicados as projects, type Area } from "@/data/projects";
-import { CONSEJO, ejeCarrera, experiencia, forecast, type Puesto } from "@/data/experiencia";
+import { CONSEJO, experiencia, forecast, type Puesto } from "@/data/experiencia";
 import { herramientas } from "@/data/formacion";
-import type { Fila } from "@/components/Carrera";
 import { duracion, formatoCorto, formatoMes, mesActual, mesSiguiente } from "@/lib/fechas";
 
 const enConsejo = (p: Puesto) => p.organizacion === CONSEJO;
@@ -63,33 +62,36 @@ export function tramosExperiencia() {
     });
 }
 
-// Filas del Gantt: todos los puestos en orden y al final el tramo proyectado.
-// Fechas "AAAA-MM" a año decimal; `hasta` cubre el mes completo.
-export function lineaDeCarrera() {
-  const anio = (f: string) => Number(f.slice(0, 4)) + (Number(f.slice(5, 7)) - 1) / 12;
-  const finDeMes = (f: string) => anio(f) + 1 / 12;
-  const hoy = mesActual();
-  const filas: Fila[] = [...experiencia]
+export type TramoCarrera = {
+  cargo: string;
+  texto: string; // duración, o "proyección"
+  periodo: string; // para lectores de pantalla
+  meses: number;
+  tipo: "otro" | "consejo" | "proyeccion";
+};
+
+// Tramos de la barra de carrera: cada puesto con ancho proporcional a su duración,
+// y al final la proyección (desde el mes siguiente al actual hasta forecast.hasta).
+export function tramosCarrera(): TramoCarrera[] {
+  const tramos: TramoCarrera[] = [...experiencia]
     .sort((a, b) => a.desde.localeCompare(b.desde))
-    .map((p) => ({
-      cargo: p.organizacion === CONSEJO ? p.cargoCorto : `${p.cargoCorto} · ${p.organizacion}`,
-      detalle: formatoCorto(duracion(p.desde, p.hasta)),
-      periodo: `${formatoMes(p.desde)} a ${p.hasta ? formatoMes(p.hasta) : "la actualidad"}`,
-      desde: anio(p.desde),
-      hasta: finDeMes(p.hasta ?? hoy),
-    }));
-  const inicioForecast = forecast.desde ?? mesSiguiente();
-  filas.push({
+    .map((p) => {
+      const d = duracion(p.desde, p.hasta);
+      return {
+        cargo: p.organizacion === CONSEJO ? p.cargoCorto : `${p.cargoCorto} · ${p.organizacion}`,
+        texto: formatoCorto(d),
+        periodo: `${formatoMes(p.desde)} a ${p.hasta ? formatoMes(p.hasta) : "la actualidad"}`,
+        meses: d.totalMeses,
+        tipo: p.organizacion === CONSEJO ? "consejo" : "otro",
+      };
+    });
+  const inicio = forecast.desde ?? mesSiguiente();
+  tramos.push({
     cargo: forecast.cargo,
-    detalle: "Proyección",
-    periodo: `proyección de ${formatoMes(inicioForecast)} a ${formatoMes(forecast.hasta)}`,
-    desde: anio(inicioForecast),
-    hasta: finDeMes(forecast.hasta),
-    proyeccion: true,
+    texto: "proyección",
+    periodo: `proyección de ${formatoMes(inicio)} a ${formatoMes(forecast.hasta)}`,
+    meses: duracion(inicio, forecast.hasta).totalMeses,
+    tipo: "proyeccion",
   });
-  return {
-    filas,
-    eje: { desde: ejeCarrera.desde, hasta: ejeCarrera.hasta + 1 },
-    hoy: { valor: finDeMes(hoy), texto: formatoMes(hoy) },
-  };
+  return tramos;
 }

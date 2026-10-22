@@ -4,7 +4,7 @@ import { useRevelar } from "@/components/useRevelar";
 
 export type Tramo = { cargo: string; meses: number; texto: string };
 
-const R = 50;
+const R = 46;
 const GAP = 1.2; // separación entre tramos, en % de la vuelta
 // Del tramo más viejo al actual: de gris a negro
 const COLORES = ["var(--muted)", "#4a4944", "var(--ink)"];
@@ -22,11 +22,13 @@ export function AnilloExperiencia({ tramos, total }: { tramos: Tramo[]; total: s
   return (
     <div ref={ref} data-revelar="anillo" className="flex h-full flex-col">
       <h2 className="text-base font-semibold tracking-tight">Trayectoria</h2>
-      <p className="text-xs text-muted">Tiempo en cada puesto</p>
-      <figure className="mt-3 flex flex-1 items-center gap-5 sm:flex-col sm:justify-center sm:gap-0">
-        <div className="relative size-28 shrink-0 sm:size-32">
+      <p className="text-xs text-muted">Años en el Consejo</p>
+      <figure className="mt-2 flex flex-1 items-center gap-5 sm:flex-col sm:justify-center sm:gap-0">
+        <div className="relative size-32 shrink-0 sm:size-36">
           <svg viewBox="0 0 120 120" className="size-full -rotate-90" aria-hidden>
-            <circle cx="60" cy="60" r={R} fill="none" stroke="var(--track)" strokeWidth="12" />
+            {/* Marcas alrededor, como un reloj */}
+            <circle cx="60" cy="60" r="58" fill="none" stroke="var(--track)" strokeWidth="4" pathLength={120} strokeDasharray="0.5 1.5" />
+            <circle cx="60" cy="60" r={R} fill="none" stroke="var(--track)" strokeWidth="10" />
             {arcos.map((a, i) => (
               <circle
                 key={a.cargo}
@@ -36,7 +38,8 @@ export function AnilloExperiencia({ tramos, total }: { tramos: Tramo[]; total: s
                 r={R}
                 fill="none"
                 stroke={a.color}
-                strokeWidth="12"
+                strokeWidth="10"
+                strokeLinecap="butt"
                 pathLength={100}
                 strokeDashoffset={-a.inicio}
                 style={{ "--largo": a.largo, "--retraso": `${i * 0.25}s` } as React.CSSProperties}
@@ -44,8 +47,8 @@ export function AnilloExperiencia({ tramos, total }: { tramos: Tramo[]; total: s
             ))}
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-xl font-bold tracking-tight">{total}</span>
-            <span className="text-[11px] text-muted">en el Consejo</span>
+            <span className="text-lg font-semibold tracking-tight sm:text-xl">{total}</span>
+            <span className="text-[10px] text-muted sm:text-[11px]">en el Consejo</span>
           </div>
         </div>
         <figcaption className="w-full min-w-0 space-y-1 text-xs sm:mt-3">
