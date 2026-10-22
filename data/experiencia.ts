@@ -31,7 +31,7 @@ export const persona = {
   bajada: "Analista de presupuesto. Automatizo procesos y analizo datos con Excel, Power BI y Python.",
   disponible: "Disponible · Data Analytics",
   foto: "/jorge.png",
-  linkedin: "https://www.linkedin.com/in/jorge-meza",
+  linkedin: "https://www.linkedin.com/in/jimeza",
   email: "mezajorgeismael@gmail.com", // del CV; el teléfono no se publica
 };
 

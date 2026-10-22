@@ -8,7 +8,15 @@ import { persona } from "@/data/experiencia";
 // El contenedor necesita posición (relative/absolute) desde className.
 const hayFoto = fs.existsSync(path.join(process.cwd(), "public", persona.foto));
 
-export function Foto({ className = "", sizes }: { className?: string; sizes: string }) {
+export function Foto({
+  className = "",
+  sizes,
+  encuadre = "object-contain object-bottom",
+}: {
+  className?: string;
+  sizes: string;
+  encuadre?: string;
+}) {
   return (
     <div className={`flex items-end justify-center overflow-hidden bg-track ${className}`}>
       {hayFoto ? (
@@ -18,7 +26,7 @@ export function Foto({ className = "", sizes }: { className?: string; sizes: str
           fill
           priority
           sizes={sizes}
-          className="object-contain object-bottom"
+          className={encuadre}
         />
       ) : (
         <svg viewBox="0 0 100 100" aria-hidden className="h-[85%] w-auto">
