@@ -91,5 +91,7 @@ export const projects: Project[] = [
   },
 ];
 
-// Lo que efectivamente muestra el sitio.
-export const proyectosPublicados = projects.filter((p) => !p.oculto);
+// Lo que efectivamente muestra el sitio. Las descripciones pendientes (TODO) no se publican.
+export const proyectosPublicados = projects
+  .filter((p) => !p.oculto)
+  .map((p) => (p.descripcion.startsWith("TODO") ? { ...p, descripcion: "" } : p));

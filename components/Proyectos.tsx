@@ -10,8 +10,6 @@ type Props = {
   balance: Parameters<typeof Balance>[0];
 };
 
-const esPendiente = (texto: string) => texto.startsWith("TODO");
-
 // Proyectos: balance automatización/datos arriba y checklist oscura con detalle desplegable.
 export function Proyectos({ proyectos, balance }: Props) {
   const [abierto, setAbierto] = useState<string | null>(null);
@@ -77,7 +75,7 @@ export function Proyectos({ proyectos, balance }: Props) {
                       className="overflow-hidden"
                     >
                       <div className="pb-3 pl-8 pr-1">
-                        {!esPendiente(p.descripcion) && (
+                        {p.descripcion && (
                           <p className="text-xs leading-relaxed text-card/80">{p.descripcion}</p>
                         )}
                         <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="Herramientas">
