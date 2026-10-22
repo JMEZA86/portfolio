@@ -27,6 +27,8 @@ export const persona = {
   cargoActual: "Analista de Presupuesto y Control Presupuestario",
   perfil:
     "Licenciado en Administración con experiencia en control de gestión, planificación presupuestaria y análisis financiero. Perfil analítico, con foco en automatización y mejora continua.",
+  // Bajada del inicio: qué hace en una línea (revisar en la pasada de textos)
+  bajada: "Analista de presupuesto. Automatizo procesos y analizo datos con Excel, Power BI y Python.",
   disponible: "Disponible · Data Analytics",
   foto: "/jorge.png",
   linkedin: "https://www.linkedin.com/in/jorge-meza",

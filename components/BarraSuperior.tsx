@@ -54,7 +54,7 @@ export function BarraSuperior({ nombre }: { nombre: string }) {
     activa === id ? "bg-ink text-card" : "text-ink hover:bg-track";
 
   return (
-    <header className="sticky top-0 z-20 -mx-4 bg-bg/90 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
+    <header className="sticky top-0 z-20 -mx-4 bg-bg/90 px-4 py-2.5 backdrop-blur sm:-mx-6 sm:px-6">
       <div ref={contenedor} className="relative flex items-center justify-between gap-3">
         <a
           href="#inicio"

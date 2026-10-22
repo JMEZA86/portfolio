@@ -5,12 +5,17 @@ type Props = {
   className?: string;
   oscura?: boolean;
   id?: string;
+  revelar?: boolean; // entrada suave al aparecer (no usar en la primera tarjeta)
 };
 
-export function Card({ children, className = "", oscura = false, id }: Props) {
+export function Card({ children, className = "", oscura = false, id, revelar = true }: Props) {
   const tono = oscura ? "bg-ink text-card" : "bg-card text-ink";
   return (
-    <section id={id} className={`rounded-card p-5 sm:p-6 ${tono} ${className}`}>
+    <section
+      id={id}
+      data-card={revelar ? "" : undefined}
+      className={`rounded-card p-4 sm:p-5 ${tono} ${className}`}
+    >
       {children}
     </section>
   );
@@ -20,7 +25,7 @@ export function Card({ children, className = "", oscura = false, id }: Props) {
 export function Pendiente({ titulo, detalle }: { titulo: string; detalle: string }) {
   return (
     <>
-      <h2 className="text-lg font-semibold tracking-tight">{titulo}</h2>
+      <h2 className="text-base font-semibold tracking-tight">{titulo}</h2>
       <p className="mt-1 text-sm opacity-75">{detalle}</p>
     </>
   );

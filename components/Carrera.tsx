@@ -26,23 +26,23 @@ export function Carrera({ filas, eje, hoy }: Props) {
 
   return (
     <div ref={ref} data-revelar="barras">
-      <h2 className="text-lg font-semibold tracking-tight">Carrera y forecast</h2>
-      <p className="text-[13px] text-muted">
+      <h2 className="text-base font-semibold tracking-tight">Carrera y forecast</h2>
+      <p className="text-xs text-muted">
         {eje.desde} – {eje.hasta - 1} · el último tramo es una proyección
       </p>
 
-      <ol className="mt-5 grid grid-cols-1 gap-y-1.5 sm:grid-cols-[11rem_1fr] sm:items-center sm:gap-x-3 sm:gap-y-3">
+      <ol className="mt-4 grid grid-cols-1 gap-y-1.5 sm:grid-cols-[10rem_1fr] sm:items-center sm:gap-x-3 sm:gap-y-2">
         {filas.map((f, i) => (
           <li key={f.cargo} className="contents">
-            <div className="mt-2 flex min-w-0 items-baseline justify-between gap-2 text-[13px] leading-tight first:mt-0 sm:mt-0 sm:block">
+            <div className="mt-2 flex min-w-0 items-baseline justify-between gap-2 text-xs leading-tight first:mt-0 sm:mt-0 sm:block">
               <span className="block font-medium sm:truncate">{f.cargo}</span>
               <span className={f.proyeccion ? "font-semibold" : "text-muted"}>{f.detalle}</span>
               <span className="sr-only">: {f.periodo}</span>
             </div>
-            <div aria-hidden className="relative h-7 rounded-lg bg-track">
+            <div aria-hidden className="relative h-5 rounded-md bg-track">
               <span
                 data-barra="h"
-                className={`absolute inset-y-0 rounded-lg ${
+                className={`absolute inset-y-0 rounded-md ${
                   f.proyeccion ? "border-2 border-dashed border-ink bg-accent" : "bg-ink"
                 }`}
                 style={
@@ -70,7 +70,7 @@ export function Carrera({ filas, eje, hoy }: Props) {
         </li>
       </ol>
 
-      <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+      <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
         <span className="flex items-center gap-1.5">
           <span aria-hidden className="inline-block h-3 w-5 rounded border-2 border-dashed border-ink bg-accent" />
           Proyección: hacia dónde voy

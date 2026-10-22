@@ -3,7 +3,7 @@ import { duracion, formatoCorto, formatoMes } from "@/lib/fechas";
 
 function Periodo({ desde, hasta }: { desde: string; hasta: string | null }) {
   return (
-    <span className="text-[13px] text-muted">
+    <span className="text-xs text-muted">
       {formatoMes(desde)} – {hasta ? formatoMes(hasta) : "actualidad"} · {formatoCorto(duracion(desde, hasta))}
     </span>
   );
@@ -11,10 +11,10 @@ function Periodo({ desde, hasta }: { desde: string; hasta: string | null }) {
 
 function Tareas({ tareas }: { tareas: string[] }) {
   return (
-    <ul className="mt-2 space-y-1.5 text-sm">
+    <ul className="mt-2 space-y-1 text-[13px] leading-snug">
       {tareas.map((t) => (
         <li key={t} className="flex gap-2">
-          <span aria-hidden className="mt-[0.45rem] size-1.5 shrink-0 rounded-full bg-accent" />
+          <span aria-hidden className="mt-[0.4rem] size-1.5 shrink-0 rounded-full bg-accent" />
           {t}
         </li>
       ))}
@@ -28,22 +28,22 @@ export function Puestos() {
 
   return (
     <>
-      <h2 className="text-lg font-semibold tracking-tight">Experiencia laboral</h2>
-      <p className="text-[13px] text-muted">{actual.organizacion}</p>
+      <h2 className="text-base font-semibold tracking-tight">Experiencia laboral</h2>
+      <p className="text-xs text-muted">{actual.organizacion}</p>
 
-      <div className="mt-4 rounded-xl bg-bg p-4">
+      <div className="mt-3 rounded-xl bg-bg p-3.5">
         <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-          <h3 className="font-semibold tracking-tight">{actual.cargo}</h3>
+          <h3 className="text-sm font-semibold tracking-tight">{actual.cargo}</h3>
           <Periodo desde={actual.desde} hasta={actual.hasta} />
         </div>
         <Tareas tareas={actual.tareas} />
       </div>
 
-      <div className="mt-2 divide-y divide-track">
+      <div className="mt-1 divide-y divide-track">
         {anteriores.map((p) => {
           const titulo = (
             <span className="min-w-0">
-              <span className="block font-medium">
+              <span className="block text-sm font-medium">
                 {p.cargo}
                 {p.organizacion !== actual.organizacion && <span className="font-normal text-muted"> · {p.organizacion}</span>}
               </span>
@@ -51,9 +51,9 @@ export function Puestos() {
             </span>
           );
           // Sin tareas cargadas no hay nada que desplegar
-          if (p.tareas.length === 0) return <div key={p.cargo} className="py-3">{titulo}</div>;
+          if (p.tareas.length === 0) return <div key={p.cargo} className="py-2.5">{titulo}</div>;
           return (
-            <details key={p.cargo} className="group py-3">
+            <details key={p.cargo} className="group py-2.5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md [&::-webkit-details-marker]:hidden">
                 {titulo}
                 <svg aria-hidden viewBox="0 0 16 16" className="size-4 shrink-0 transition-transform group-open:rotate-180">

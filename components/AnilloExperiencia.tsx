@@ -21,9 +21,10 @@ export function AnilloExperiencia({ tramos, total }: { tramos: Tramo[]; total: s
 
   return (
     <div ref={ref} data-revelar="anillo" className="flex h-full flex-col">
-      <h2 className="text-sm font-medium text-muted">Experiencia</h2>
-      <figure className="mt-3 flex flex-1 flex-col items-center justify-center">
-        <div className="relative size-40">
+      <h2 className="text-base font-semibold tracking-tight">Trayectoria</h2>
+      <p className="text-xs text-muted">Tiempo en cada puesto</p>
+      <figure className="mt-3 flex flex-1 items-center gap-5 sm:flex-col sm:justify-center sm:gap-0">
+        <div className="relative size-28 shrink-0 sm:size-32">
           <svg viewBox="0 0 120 120" className="size-full -rotate-90" aria-hidden>
             <circle cx="60" cy="60" r={R} fill="none" stroke="var(--track)" strokeWidth="12" />
             {arcos.map((a, i) => (
@@ -43,16 +44,16 @@ export function AnilloExperiencia({ tramos, total }: { tramos: Tramo[]; total: s
             ))}
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold tracking-tight">{total}</span>
+            <span className="text-xl font-bold tracking-tight">{total}</span>
             <span className="text-[11px] text-muted">en el Consejo</span>
           </div>
         </div>
-        <figcaption className="mt-4 w-full space-y-1 text-[13px]">
+        <figcaption className="w-full min-w-0 space-y-1 text-xs sm:mt-3">
           {arcos.map((a) => (
             <div key={a.cargo} className="flex items-center justify-between gap-2">
               <span className="flex min-w-0 items-center gap-1.5">
                 <span className="size-2.5 shrink-0 rounded-sm" style={{ background: a.color }} />
-                <span className="truncate">{a.cargo}</span>
+                <span className="sm:truncate">{a.cargo}</span>
               </span>
               <span className="shrink-0 tabular-nums text-muted">{a.texto}</span>
             </div>
