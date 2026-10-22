@@ -1,11 +1,11 @@
 import { AnilloExperiencia } from "@/components/AnilloExperiencia";
 import { BarraSuperior } from "@/components/BarraSuperior";
 import { Card } from "@/components/Card";
+import { Contacto } from "@/components/Contacto";
 import { DevTodo } from "@/components/DevTodo";
-import { FotoCard } from "@/components/FotoCard";
+import { Formacion } from "@/components/Formacion";
 import { Herramientas } from "@/components/Herramientas";
 import { LineaCarrera } from "@/components/LineaCarrera";
-import { MasInfo } from "@/components/MasInfo";
 import { Proyectos } from "@/components/Proyectos";
 import { Puestos } from "@/components/Puestos";
 import { RevelarTarjetas } from "@/components/RevelarTarjetas";
@@ -30,21 +30,23 @@ export default function Home() {
         <LineaCarrera tramos={tramosCarrera()} />
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <FotoCard />
-          <Card id="experiencia" className="lg:col-span-2 lg:col-start-2 lg:row-start-2">
+          <Card id="experiencia" className="sm:col-span-2 lg:col-start-1 lg:row-start-1">
             <Puestos />
           </Card>
-          <Card id="herramientas" className="lg:col-start-2 lg:row-start-1">
-            <Herramientas items={herramientas} />
-          </Card>
-          <Card className="lg:col-start-3 lg:row-start-1">
+          <Card className="lg:col-start-1 lg:row-start-2">
             <AnilloExperiencia tramos={tramosExperiencia()} total={formatoCorto(experienciaTotal())} />
           </Card>
-          <Card id="proyectos" className="lg:col-start-4 lg:row-span-2 lg:row-start-1">
+          <Card id="herramientas" className="lg:col-start-3 lg:row-start-1">
+            <Herramientas items={herramientas} />
+          </Card>
+          <Card id="proyectos" className="sm:col-span-2 lg:col-span-1 lg:col-start-4 lg:row-span-2 lg:row-start-1">
             <Proyectos proyectos={proyectosPublicados} balance={balance()} />
           </Card>
-          <Card id="contacto" className="lg:col-start-1 lg:row-start-2">
-            <MasInfo />
+          <Card className="lg:col-start-2 lg:row-start-2">
+            <Formacion />
+          </Card>
+          <Card id="contacto" className="lg:col-start-3 lg:row-start-2">
+            <Contacto />
           </Card>
         </div>
       </main>
