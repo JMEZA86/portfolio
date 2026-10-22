@@ -4,7 +4,7 @@ import { formacion } from "@/data/formacion";
 function Item({ titulo, abierto = false, children }: { titulo: string; abierto?: boolean; children: React.ReactNode }) {
   return (
     <details open={abierto} className="group border-t border-track py-2.5 first:border-t-0 first:pt-0">
-      <summary className="flex cursor-pointer list-none items-center justify-between rounded-md text-sm font-medium [&::-webkit-details-marker]:hidden">
+      <summary className="flex min-h-8 cursor-pointer list-none items-center justify-between rounded-md text-sm font-medium [&::-webkit-details-marker]:hidden">
         {titulo}
         <svg aria-hidden viewBox="0 0 16 16" className="size-3.5 transition-transform group-open:rotate-180">
           <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.75" fill="none" strokeLinecap="round" />

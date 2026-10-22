@@ -54,7 +54,7 @@ export function Puestos() {
           if (p.tareas.length === 0) return <div key={p.cargo} className="flex py-2">{titulo}</div>;
           return (
             <details key={p.cargo} className="group py-2">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-8 cursor-pointer list-none items-center justify-between gap-3 rounded-md [&::-webkit-details-marker]:hidden">
                 {titulo}
                 <svg aria-hidden viewBox="0 0 16 16" className="size-4 shrink-0 transition-transform group-open:rotate-180">
                   <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.75" fill="none" strokeLinecap="round" />
