@@ -49,7 +49,13 @@ export const experiencia: Puesto[] = [
     organizacion: "Starbucks",
     desde: "2009-11",
     hasta: "2012-05",
-    tareas: [], // TODO: 2 o 3 tareas que cuente Jorge
+    tareas: [
+      "A cargo de la tienda durante el turno y de la operación completa en ausencia del gerente",
+      "Coordinación del equipo de baristas: asignación de posiciones, delegación y control de tareas",
+      "Capacitación de nuevos integrantes y acompañamiento del equipo",
+      "Manejo de caja y efectivo según los procedimientos de la empresa, y control de su cumplimiento",
+      "Control de calidad y servicio: recetas, presentación, rapidez y limpieza del local",
+    ],
   },
   {
     cargo: "Cajero",
