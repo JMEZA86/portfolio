@@ -5,6 +5,7 @@ export function Contacto() {
     <div className="flex h-full flex-col">
       <h2 className="text-base font-semibold tracking-tight">Contacto</h2>
       <p className="mt-1 text-[13px] text-muted">¿Hablamos? Respondo por mail o LinkedIn.</p>
+      <p className="mt-2 break-all text-[13px] font-medium">{persona.email}</p>
       <div className="mt-auto flex flex-col gap-1.5 pt-4 text-[13px] font-medium">
         <a href={`mailto:${persona.email}`} className="flex min-h-9 items-center justify-between rounded-lg bg-ink px-3 text-card hover:bg-ink/85">
           Escribime <span aria-hidden>↗</span>
