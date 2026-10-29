@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@/components/Logos";
 import { useRevelar } from "@/components/useRevelar";
 import type { Herramienta, Nivel } from "@/data/formacion";
 
@@ -22,7 +23,13 @@ export function Herramientas({ items }: { items: Herramienta[] }) {
           const { pasos, texto } = NIVELES[h.nivel];
           return (
             <li key={h.nombre} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 text-[13px]">
-              <span className="font-medium">
+              <span className="flex min-w-0 items-center gap-1.5 font-medium">
+                {/* Columna fija para que los nombres queden alineados (SQL va sin logo) */}
+                <span className="flex w-[2.125rem] shrink-0 gap-0.5">
+                  {h.logos?.map((l) => (
+                    <Logo key={l} nombre={l} />
+                  ))}
+                </span>
                 {h.nombre}
                 {h.detalle && <span className="font-normal text-muted"> · {h.detalle}</span>}
               </span>

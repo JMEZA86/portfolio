@@ -10,10 +10,13 @@ export type Formacion = {
 
 export type Nivel = "basico" | "intermedio" | "avanzado";
 
+export type Logo = "excel" | "powerbi" | "powerautomate" | "python" | "sap";
+
 export type Herramienta = {
   nombre: string;
   nivel: Nivel; // autoevaluación de Jorge
   detalle?: string;
+  logos?: Logo[]; // íconos al lado del nombre; sin logos no se muestra nada
 };
 
 export const formacion: Formacion[] = [
@@ -27,13 +30,14 @@ export const formacion: Formacion[] = [
 
 // Herramientas con nivel de conocimiento. Se muestran en la sección "Herramientas".
 export const herramientas: Herramienta[] = [
-  { nombre: "Excel", nivel: "avanzado" },
-  { nombre: "Power Query", nivel: "avanzado" },
-  { nombre: "Power BI", nivel: "intermedio" },
-  { nombre: "DAX", nivel: "intermedio" },
-  { nombre: "Python", nivel: "intermedio", detalle: "con IA" },
-  { nombre: "Power Automate", nivel: "intermedio" },
-  { nombre: "SAP FI/CO", nivel: "intermedio" },
+  { nombre: "Excel", nivel: "avanzado", logos: ["excel"] },
+  // Power Query y DAX se usan dentro de Excel y de Power BI
+  { nombre: "Power Query", nivel: "avanzado", logos: ["excel", "powerbi"] },
+  { nombre: "Power BI", nivel: "intermedio", logos: ["powerbi"] },
+  { nombre: "DAX", nivel: "intermedio", logos: ["excel", "powerbi"] },
+  { nombre: "Python", nivel: "intermedio", detalle: "con IA", logos: ["python"] },
+  { nombre: "Power Automate", nivel: "intermedio", logos: ["powerautomate"] },
+  { nombre: "SAP FI/CO", nivel: "intermedio", logos: ["sap"] },
   { nombre: "SQL", nivel: "basico" },
 ];
 
