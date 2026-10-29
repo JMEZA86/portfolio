@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from "react";
 const menu = [
   { id: "inicio", label: "Resumen" },
   { id: "experiencia", label: "Experiencia" },
+  { id: "herramientas", label: "Herramientas" },
   { id: "proyectos", label: "Proyectos" },
-  { id: "contacto", label: "Contacto" },
 ];
 
 function useSeccionActiva() {

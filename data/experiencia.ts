@@ -32,7 +32,10 @@ export const persona = {
   disponible: "Disponible · Data Analytics",
   foto: "/jorge.png",
   linkedin: "https://www.linkedin.com/in/jimeza",
-  email: "mezajorgeismael@gmail.com", // del CV; el teléfono no se publica
+  email: "mezajorgeismael@gmail.com",
+  // WhatsApp en formato internacional sin "+" ni espacios (54 9 + área + número), del CV
+  whatsapp: "5491123201137",
+  mensajeWhatsapp: "Hola Jorge, vi tu portfolio y me gustaría hablar con vos.",
 };
 
 // Organización del anillo "en el Consejo"

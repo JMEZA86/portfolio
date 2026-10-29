@@ -18,7 +18,7 @@ export function Herramientas({ items }: { items: Herramienta[] }) {
     <div ref={ref} data-revelar="barras">
       <h2 className="text-base font-semibold tracking-tight">Herramientas</h2>
       <p className="text-xs text-muted">Nivel de conocimiento</p>
-      <ul className="mt-3 space-y-2.5">
+      <ul className="mt-3 grid gap-x-6 gap-y-2.5 lg:grid-cols-2">
         {items.map((h, i) => {
           const { pasos, texto } = NIVELES[h.nivel];
           return (
