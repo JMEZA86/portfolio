@@ -1,10 +1,14 @@
+"use client";
+
+import { useResaltado } from "@/components/Resaltado";
 import { experiencia } from "@/data/experiencia";
 import { duracion, formatoCorto, formatoMes } from "@/lib/fechas";
 
 function Periodo({ desde, hasta }: { desde: string; hasta: string | null }) {
   return (
     <span className="text-xs text-muted">
-      {formatoMes(desde)} – {hasta ? formatoMes(hasta) : "actualidad"} · {formatoCorto(duracion(desde, hasta))}
+      {formatoMes(desde)} – {hasta ? formatoMes(hasta) : "actualidad"} ·{" "}
+      {formatoCorto(duracion(desde, hasta))}
     </span>
   );
 }
@@ -14,7 +18,10 @@ function Tareas({ tareas }: { tareas: string[] }) {
     <ul className="mt-2 grid gap-x-5 gap-y-1 text-[13px] leading-snug lg:grid-cols-2">
       {tareas.map((t) => (
         <li key={t} className="flex gap-2">
-          <span aria-hidden className="mt-[0.4rem] size-1.5 shrink-0 rounded-full bg-accent" />
+          <span
+            aria-hidden
+            className="mt-[0.4rem] size-1.5 shrink-0 rounded-full bg-accent"
+          />
           {t}
         </li>
       ))}
@@ -24,16 +31,33 @@ function Tareas({ tareas }: { tareas: string[] }) {
 
 // Lo que hace Jorge: el puesto actual abierto, los anteriores plegables.
 export function Puestos() {
-  const [actual, ...anteriores] = [...experiencia].sort((a, b) => b.desde.localeCompare(a.desde));
+  const { clave, resaltar } = useResaltado();
+  // Resaltado compartido con la barra de carrera y el anillo
+  const marca = (desde: string) =>
+    clave === desde ? "bg-accent/30 ring-2 ring-accent" : "";
+  const eventos = (desde: string) => ({
+    onMouseEnter: () => resaltar(desde),
+    onMouseLeave: () => resaltar(null),
+  });
+  const [actual, ...anteriores] = [...experiencia].sort((a, b) =>
+    b.desde.localeCompare(a.desde),
+  );
 
   return (
     <>
-      <h2 className="text-base font-semibold tracking-tight">Experiencia laboral</h2>
+      <h2 className="text-base font-semibold tracking-tight">
+        Experiencia laboral
+      </h2>
       <p className="text-xs text-muted">{actual.organizacion}</p>
 
-      <div className="mt-3 rounded-xl bg-bg p-3.5">
+      <div
+        {...eventos(actual.desde)}
+        className={`mt-3 rounded-xl bg-bg p-3.5 transition-shadow ${marca(actual.desde)}`}
+      >
         <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-          <h3 className="text-sm font-semibold tracking-tight">{actual.cargo}</h3>
+          <h3 className="text-sm font-semibold tracking-tight">
+            {actual.cargo}
+          </h3>
           <Periodo desde={actual.desde} hasta={actual.hasta} />
         </div>
         <Tareas tareas={actual.tareas} />
@@ -45,19 +69,48 @@ export function Puestos() {
             <span className="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-x-3">
               <span className="block text-sm font-medium">
                 {p.cargo}
-                {p.organizacion !== actual.organizacion && <span className="font-normal text-muted"> · {p.organizacion}</span>}
+                {p.organizacion !== actual.organizacion && (
+                  <span className="font-normal text-muted">
+                    {" "}
+                    · {p.organizacion}
+                  </span>
+                )}
               </span>
               <Periodo desde={p.desde} hasta={p.hasta} />
             </span>
           );
           // Sin tareas cargadas no hay nada que desplegar
-          if (p.tareas.length === 0) return <div key={p.cargo} className="flex py-2">{titulo}</div>;
+          const fila = `-mx-2 rounded-lg px-2 transition-shadow ${marca(p.desde)}`;
+          if (p.tareas.length === 0)
+            return (
+              <div
+                key={p.cargo}
+                {...eventos(p.desde)}
+                className={`flex py-2 ${fila}`}
+              >
+                {titulo}
+              </div>
+            );
           return (
-            <details key={p.cargo} className="group py-2">
+            <details
+              key={p.cargo}
+              {...eventos(p.desde)}
+              className={`group py-2 ${fila}`}
+            >
               <summary className="flex min-h-8 cursor-pointer list-none items-center justify-between gap-3 rounded-md [&::-webkit-details-marker]:hidden">
                 {titulo}
-                <svg aria-hidden viewBox="0 0 16 16" className="size-4 shrink-0 transition-transform group-open:rotate-180">
-                  <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.75" fill="none" strokeLinecap="round" />
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  className="size-4 shrink-0 transition-transform group-open:rotate-180"
+                >
+                  <path
+                    d="M4 6l4 4 4-4"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </summary>
               <Tareas tareas={p.tareas} />

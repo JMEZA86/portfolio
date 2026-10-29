@@ -8,11 +8,15 @@ export function RevelarTarjetas() {
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entradas) => {
-        for (const e of entradas) {
-          if (!e.isIntersecting) continue;
-          e.target.setAttribute("data-visible", "");
-          obs.unobserve(e.target);
-        }
+        // Las que aparecen juntas entran en cascada, con un pequeño desfase
+        entradas
+          .filter((e) => e.isIntersecting)
+          .forEach((e, i) => {
+            const el = e.target as HTMLElement;
+            el.style.setProperty("--retraso-card", `${0.5 + i * 0.08}s`);
+            el.setAttribute("data-visible", "");
+            obs.unobserve(el);
+          });
       },
       { rootMargin: "0px 0px -8% 0px" },
     );

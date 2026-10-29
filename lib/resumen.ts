@@ -58,11 +58,12 @@ export function tramosExperiencia() {
     .sort((a, b) => a.desde.localeCompare(b.desde))
     .map((p) => {
       const d = duracion(p.desde, p.hasta);
-      return { cargo: p.cargoCorto, meses: d.totalMeses, texto: formatoCorto(d) };
+      return { clave: p.desde, cargo: p.cargoCorto, meses: d.totalMeses, texto: formatoCorto(d) };
     });
 }
 
 export type TramoCarrera = {
+  clave: string; // fecha de inicio del puesto, o "proyeccion"
   cargo: string;
   texto: string; // duración, o "proyección"
   periodo: string; // para lectores de pantalla
@@ -78,6 +79,7 @@ export function tramosCarrera(): TramoCarrera[] {
     .map((p) => {
       const d = duracion(p.desde, p.hasta);
       return {
+        clave: p.desde,
         cargo: p.organizacion === CONSEJO ? p.cargoCorto : `${p.cargoCorto} · ${p.organizacion}`,
         texto: formatoCorto(d),
         periodo: `${formatoMes(p.desde)} a ${p.hasta ? formatoMes(p.hasta) : "la actualidad"}`,
@@ -87,6 +89,7 @@ export function tramosCarrera(): TramoCarrera[] {
     });
   const inicio = forecast.desde ?? mesSiguiente();
   tramos.push({
+    clave: "proyeccion",
     cargo: forecast.cargo,
     texto: "proyección",
     periodo: `proyección de ${formatoMes(inicio)} a ${formatoMes(forecast.hasta)}`,
