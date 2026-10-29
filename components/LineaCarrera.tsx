@@ -111,6 +111,74 @@ function Pastilla({
   );
 }
 
+function FilaMovil({ t, max, i }: { t: TramoCarrera; max: number; i: number }) {
+  const { clave } = useResaltado();
+  const disparador = useDisparador(t.clave);
+  return (
+    <button
+      type="button"
+      {...disparador}
+      aria-label={`${t.cargo}${t.grupo ? ` (${t.grupo})` : ""}, ${t.texto}: ${t.periodo}`}
+      className={`grid w-full cursor-default grid-cols-[9.75rem_1fr_3.75rem] items-center gap-2 py-1 text-left text-xs transition-opacity duration-200 ${claseAtenuado(
+        clave,
+        t.clave,
+      )}`}
+    >
+      <span className={`truncate ${t.grupo ? "pl-2" : ""}`}>{t.cargo}</span>
+      <span className="h-3 rounded-full bg-track">
+        <span
+          data-barra="h"
+          className={`block h-full rounded-full ${
+            t.tipo === "proyeccion"
+              ? "rayado border border-ink/30"
+              : t.tipo === "otro"
+                ? "border border-ink/30 bg-card"
+                : "bg-ink"
+          }`}
+          style={
+            {
+              width: `${Math.max((t.meses / max) * 100, 6)}%`,
+              "--retraso": `${0.2 + i * 0.1}s`,
+            } as React.CSSProperties
+          }
+        />
+      </span>
+      <span className="text-right text-muted tabular-nums">{t.texto}</span>
+    </button>
+  );
+}
+
+function CarreraMovil({ tramos }: { tramos: TramoCarrera[] }) {
+  const ref = useRevelar<HTMLDivElement>(0.3);
+  const max = Math.max(...tramos.map((t) => t.meses));
+  return (
+    <div
+      ref={ref}
+      data-revelar="barras"
+      className="rounded-card bg-card p-3 sm:p-4 lg:hidden"
+    >
+      <ol>
+        {tramos.map((t, i) => (
+          <li key={t.clave}>
+            {t.grupo && tramos[i - 1]?.grupo !== t.grupo && (
+              <span className="mt-1 block text-xs font-semibold first:mt-0">
+                {t.grupoTexto}
+              </span>
+            )}
+            {!t.grupo && (
+              <span
+                className="mt-1 block border-t border-track pt-1"
+                aria-hidden
+              />
+            )}
+            <FilaMovil t={t} max={max} i={i} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 // Barra horizontal de la carrera: un tramo por puesto, ancho proporcional a su duración.
 // El último tramo (Data Analyst) es la proyección, rayado en amarillo.
 // Al pasar o tocar un tramo se resalta el mismo puesto en el anillo y en la experiencia laboral.
@@ -124,7 +192,7 @@ export function LineaCarrera({ tramos }: { tramos: TramoCarrera[] }) {
         Línea de carrera
       </h2>
       <div ref={ref} data-revelar="carrera">
-        <ol className="flex gap-1.5">
+        <ol className="hidden gap-1.5 lg:flex">
           {tramos.map((t, i) => (
             <Pastilla
               key={t.clave}
@@ -140,26 +208,9 @@ export function LineaCarrera({ tramos }: { tramos: TramoCarrera[] }) {
         </ol>
       </div>
 
-      {/* En celular los textos no entran en las pastillas: van como leyenda */}
-      <ul aria-hidden className="mt-2 space-y-0.5 text-xs text-muted sm:hidden">
-        {tramos.map((t, i) => (
-          <li key={t.clave}>
-            {/* En celular, la organización va como subtítulo del grupo */}
-            {t.grupo && tramos[i - 1]?.grupo !== t.grupo && (
-              <span className="mt-1.5 block font-semibold text-ink first:mt-0">
-                {t.grupoTexto}
-              </span>
-            )}
-            <span
-              className={`flex justify-between gap-2 ${t.grupo ? "pl-2" : "mt-1.5"}`}
-            >
-              <span className="truncate">{t.cargo}</span>
-              <span className="shrink-0 tabular-nums">{t.texto}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-1.5 hidden text-right text-[11px] text-muted sm:block">
+      {/* En celular: gráfico de barras horizontales, una fila por puesto, agrupadas por organización */}
+      <CarreraMovil tramos={tramos} />
+      <p className="mt-1.5 hidden text-right text-[11px] text-muted lg:block">
         {Math.round(total / 12)} años de carrera · pasá el mouse por un tramo ·
         el rayado es una proyección
       </p>
