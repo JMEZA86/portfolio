@@ -25,9 +25,9 @@ export function Herramientas({ items }: { items: Herramienta[] }) {
             <li key={h.nombre} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 text-[13px]">
               <span className="flex min-w-0 items-center gap-1.5 font-medium">
                 {/* Columna fija para que los nombres queden alineados (SQL va sin logo) */}
-                <span className="flex w-[2.125rem] shrink-0 gap-0.5">
+                <span className="flex w-[2.375rem] shrink-0 gap-1">
                   {h.logos?.map((l) => (
-                    <Logo key={l} nombre={l} />
+                    <Logo key={l} nombre={l} className="size-[17px]" />
                   ))}
                 </span>
                 {h.nombre}
