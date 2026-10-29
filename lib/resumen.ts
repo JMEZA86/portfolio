@@ -62,6 +62,17 @@ export function tramosExperiencia() {
     });
 }
 
+// Puestos fuera del Consejo: no forman parte del anillo, pero se muestran en su centro al resaltarlos.
+export function puestosFueraDelConsejo() {
+  return experiencia
+    .filter((p) => !enConsejo(p))
+    .map((p) => ({
+      clave: p.desde,
+      cargo: `${p.cargoCorto} · ${p.organizacion}`,
+      texto: formatoCorto(duracion(p.desde, p.hasta)),
+    }));
+}
+
 export type TramoCarrera = {
   clave: string; // fecha de inicio del puesto, o "proyeccion"
   cargo: string;

@@ -16,16 +16,20 @@ const GAP = 1.2; // separación entre tramos, en % de la vuelta
 const COLORES = ["var(--muted)", "#4a4944", "var(--ink)"];
 
 // Anillo con un tramo por puesto (proporcional a su duración) y el total al centro.
+type Externo = { clave: string; cargo: string; texto: string };
+
 export function AnilloExperiencia({
   tramos,
   total,
+  externos = [],
 }: {
   tramos: Tramo[];
   total: string;
+  externos?: Externo[]; // puestos fuera del anillo (p. ej. Starbucks): solo se muestran en el centro
 }) {
   const ref = useRevelar<HTMLDivElement>(0.4);
   const { clave, resaltar } = useResaltado();
-  const elegido = tramos.find((t) => t.clave === clave);
+  const elegido = tramos.find((t) => t.clave === clave) ?? externos.find((t) => t.clave === clave);
   const suma = tramos.reduce((a, t) => a + t.meses, 0);
   const arcos = tramos.map((t, i) => {
     const inicio = tramos

@@ -15,7 +15,13 @@ import { persona } from "@/data/experiencia";
 import { herramientas, pendientesFormacion } from "@/data/formacion";
 import { proyectosPublicados } from "@/data/projects";
 import { formatoCorto } from "@/lib/fechas";
-import { balance, experienciaTotal, tramosCarrera, tramosExperiencia } from "@/lib/resumen";
+import {
+  balance,
+  experienciaTotal,
+  puestosFueraDelConsejo,
+  tramosCarrera,
+  tramosExperiencia,
+} from "@/lib/resumen";
 
 // Disposición horizontal tipo tablero. El orden del HTML es el de celular.
 export default function Home() {
@@ -36,7 +42,11 @@ export default function Home() {
               <Puestos />
             </Card>
             <Card className="sm:col-span-2 lg:col-span-1">
-              <AnilloExperiencia tramos={tramosExperiencia()} total={formatoCorto(experienciaTotal())} />
+              <AnilloExperiencia
+                tramos={tramosExperiencia()}
+                total={formatoCorto(experienciaTotal())}
+                externos={puestosFueraDelConsejo()}
+              />
             </Card>
 
             {/* Fila 2: herramientas + formación */}
