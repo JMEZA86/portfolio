@@ -20,7 +20,7 @@ import { balance, experienciaTotal, tramosCarrera, tramosExperiencia } from "@/l
 // Disposición horizontal tipo tablero. El orden del HTML es el de celular.
 export default function Home() {
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+    <div className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 xl:pb-10">
       <BarraSuperior nombre={persona.nombre} />
       <RevelarTarjetas />
 

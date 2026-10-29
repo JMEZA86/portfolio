@@ -1,7 +1,12 @@
+"use client";
+
+import { AnimatePresence, m } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { persona } from "@/data/experiencia";
 
-// Cuadro de contacto fijo abajo a la derecha: acompaña el scroll en toda la página.
-// Íconos simplificados propios con los colores de cada servicio.
+// Contacto fijo que acompaña el scroll. Íconos simplificados propios con los colores de cada servicio.
+// - Pantallas anchas (xl): barra vertical siempre abierta, en el margen derecho, fuera del contenido.
+// - Pantallas chicas: un botón redondo que despliega los íconos hacia arriba, para tapar lo mínimo.
 function IconoLinkedin() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden className="size-5">
@@ -37,7 +42,27 @@ function IconoWhatsapp() {
   );
 }
 
+function IconoChat({ abierto }: { abierto: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className="size-5">
+      {abierto ? (
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      ) : (
+        <path
+          d="M4 5.5A2.5 2.5 0 016.5 3h11A2.5 2.5 0 0120 5.5v8a2.5 2.5 0 01-2.5 2.5H10l-4.5 4v-4H6.5A2.5 2.5 0 014 13.5z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+      )}
+    </svg>
+  );
+}
+
 export function ContactoFlotante() {
+  const [abierto, setAbierto] = useState(false);
+  const caja = useRef<HTMLDivElement>(null);
   const whatsapp = `https://wa.me/${persona.whatsapp}?text=${encodeURIComponent(persona.mensajeWhatsapp)}`;
   const items = [
     { href: persona.linkedin, label: "LinkedIn", icono: <IconoLinkedin />, externo: true },
@@ -45,25 +70,73 @@ export function ContactoFlotante() {
     { href: whatsapp, label: "WhatsApp", icono: <IconoWhatsapp />, externo: true },
   ];
 
-  return (
-    <nav
-      id="contacto"
-      aria-label="Contacto"
-      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-30 flex items-center gap-1 rounded-full bg-ink p-1.5 pl-3.5 text-card shadow-lg shadow-ink/20 sm:right-6"
+  // Cerrar el desplegable con Escape o tocando afuera
+  useEffect(() => {
+    if (!abierto) return;
+    const tecla = (e: KeyboardEvent) => e.key === "Escape" && setAbierto(false);
+    const toque = (e: PointerEvent) => !caja.current?.contains(e.target as Node) && setAbierto(false);
+    document.addEventListener("keydown", tecla);
+    document.addEventListener("pointerdown", toque);
+    return () => {
+      document.removeEventListener("keydown", tecla);
+      document.removeEventListener("pointerdown", toque);
+    };
+  }, [abierto]);
+
+  const enlace = (it: (typeof items)[number]) => (
+    <a
+      key={it.label}
+      href={it.href}
+      {...(it.externo ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      aria-label={it.externo ? `${it.label} (se abre en otra pestaña)` : it.label}
+      title={it.label}
+      className="grid size-10 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
     >
-      <span className="mr-1 hidden text-xs font-medium sm:inline">Contactame</span>
-      {items.map((it) => (
-        <a
-          key={it.label}
-          href={it.href}
-          {...(it.externo ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          aria-label={it.externo ? `${it.label} (se abre en otra pestaña)` : it.label}
-          title={it.label}
-          className="grid size-10 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+      {it.icono}
+    </a>
+  );
+
+  return (
+    <div id="contacto">
+      {/* Pantallas anchas: barra vertical en el margen, fuera del contenido (max-w-6xl = 72rem) */}
+      <nav
+        aria-label="Contacto"
+        className="fixed top-1/2 right-[max(0.75rem,calc((100vw-72rem)/2-4.5rem))] z-30 hidden -translate-y-1/2 flex-col gap-1.5 rounded-full bg-ink p-1.5 shadow-lg shadow-ink/20 xl:flex"
+      >
+        {items.map(enlace)}
+      </nav>
+
+      {/* Pantallas chicas: botón que despliega */}
+      <div
+        ref={caja}
+        className="fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 flex flex-col items-center gap-2 xl:hidden"
+      >
+        <AnimatePresence>
+          {abierto && (
+            <m.nav
+              id="contacto-opciones"
+              aria-label="Contacto"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.15 }}
+              className="flex flex-col gap-1.5 rounded-full bg-ink p-1.5 shadow-lg shadow-ink/20"
+            >
+              {items.map(enlace)}
+            </m.nav>
+          )}
+        </AnimatePresence>
+        <button
+          type="button"
+          aria-expanded={abierto}
+          aria-controls="contacto-opciones"
+          aria-label={abierto ? "Cerrar contacto" : "Abrir contacto"}
+          onClick={() => setAbierto((v) => !v)}
+          className="grid size-12 place-items-center rounded-full bg-ink text-card shadow-lg shadow-ink/25"
         >
-          {it.icono}
-        </a>
-      ))}
-    </nav>
+          <IconoChat abierto={abierto} />
+        </button>
+      </div>
+    </div>
   );
 }
