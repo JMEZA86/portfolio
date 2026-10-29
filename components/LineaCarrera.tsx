@@ -15,14 +15,18 @@ const ESTILO: Record<TramoCarrera["tipo"], string> = {
   proyeccion: "rayado border border-ink/30 text-ink",
 };
 
+type Posicion = { primero: boolean; ultimo: boolean };
+
 function Pastilla({
   t,
   i,
   total,
+  grupo,
 }: {
   t: TramoCarrera;
   i: number;
   total: number;
+  grupo: Posicion;
 }) {
   const { clave } = useResaltado();
   const disparador = useDisparador(t.clave);
@@ -35,6 +39,21 @@ function Pastilla({
       className={`relative min-w-0 transition-opacity duration-200 ${claseAtenuado(clave, t.clave)}`}
       style={{ flexGrow: t.meses, flexBasis: 0 }}
     >
+      {/* Organización: una línea que agrupa los puestos seguidos del mismo lugar */}
+      <span aria-hidden className="relative hidden h-5 sm:block">
+        {t.grupo && grupo.primero && (
+          <span className="absolute top-0 left-1 text-[11px] font-semibold whitespace-nowrap">
+            {t.grupoTexto}
+          </span>
+        )}
+        {t.grupo && (
+          <span
+            className={`absolute bottom-1.5 h-px bg-ink/35 ${grupo.primero ? "left-1" : "left-0"} ${
+              grupo.ultimo ? "right-1" : "-right-1.5"
+            }`}
+          />
+        )}
+      </span>
       <span className="hidden truncate pb-1.5 pl-1 text-[11px] text-muted sm:block">
         {t.cargo}
       </span>
@@ -51,7 +70,7 @@ function Pastilla({
           setPropio(false);
           disparador.onBlur();
         }}
-        aria-label={`${t.cargo}, ${t.texto}: ${t.periodo}`}
+        aria-label={`${t.cargo}${t.grupo ? ` (${t.grupo})` : ""}, ${t.texto}: ${t.periodo}`}
         data-pastilla
         style={{ "--retraso": `${0.25 + i * 0.18}s` } as React.CSSProperties}
         className={`flex h-8 w-full cursor-default items-center overflow-hidden rounded-full px-3 text-xs font-medium ${ESTILO[t.tipo]}`}
@@ -84,8 +103,8 @@ function Pastilla({
                 : "left-1/2 -translate-x-1/2"
           } rounded-lg bg-ink px-2.5 py-1.5 text-[11px] text-card shadow-sm`}
         >
-          <strong className="font-semibold">{t.cargo}</strong> · {t.periodo} ·{" "}
-          {t.texto}
+          <strong className="font-semibold">{t.cargo}</strong>
+          {t.grupo ? ` · ${t.grupo}` : ""} · {t.periodo} · {t.texto}
         </span>
       )}
     </li>
@@ -107,17 +126,36 @@ export function LineaCarrera({ tramos }: { tramos: TramoCarrera[] }) {
       <div ref={ref} data-revelar="carrera">
         <ol className="flex gap-1.5">
           {tramos.map((t, i) => (
-            <Pastilla key={t.clave} t={t} i={i} total={tramos.length} />
+            <Pastilla
+              key={t.clave}
+              t={t}
+              i={i}
+              total={tramos.length}
+              grupo={{
+                primero: tramos[i - 1]?.grupo !== t.grupo,
+                ultimo: tramos[i + 1]?.grupo !== t.grupo,
+              }}
+            />
           ))}
         </ol>
       </div>
 
       {/* En celular los textos no entran en las pastillas: van como leyenda */}
       <ul aria-hidden className="mt-2 space-y-0.5 text-xs text-muted sm:hidden">
-        {tramos.map((t) => (
-          <li key={t.clave} className="flex justify-between gap-2">
-            <span className="truncate">{t.cargo}</span>
-            <span className="shrink-0 tabular-nums">{t.texto}</span>
+        {tramos.map((t, i) => (
+          <li key={t.clave}>
+            {/* En celular, la organización va como subtítulo del grupo */}
+            {t.grupo && tramos[i - 1]?.grupo !== t.grupo && (
+              <span className="mt-1.5 block font-semibold text-ink first:mt-0">
+                {t.grupoTexto}
+              </span>
+            )}
+            <span
+              className={`flex justify-between gap-2 ${t.grupo ? "pl-2" : "mt-1.5"}`}
+            >
+              <span className="truncate">{t.cargo}</span>
+              <span className="shrink-0 tabular-nums">{t.texto}</span>
+            </span>
           </li>
         ))}
       </ul>

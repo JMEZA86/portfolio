@@ -1,6 +1,6 @@
 // Números derivados de data/. Ningún componente escribe cifras a mano.
 import { proyectosPublicados as projects, type Area } from "@/data/projects";
-import { CONSEJO, experiencia, forecast, type Puesto } from "@/data/experiencia";
+import { CONSEJO, CONSEJO_SIGLA, experiencia, forecast, type Puesto } from "@/data/experiencia";
 import { herramientas } from "@/data/formacion";
 import { duracion, formatoCorto, formatoMes, mesActual, mesSiguiente } from "@/lib/fechas";
 
@@ -69,6 +69,8 @@ export type TramoCarrera = {
   periodo: string; // para lectores de pantalla
   meses: number;
   tipo: "otro" | "consejo" | "proyeccion";
+  grupo: string | null; // organización que agrupa tramos seguidos (null = proyección)
+  grupoTexto: string; // etiqueta del grupo, p. ej. "CPCECABA · 14a 6m"
 };
 
 // Tramos de la barra de carrera: cada puesto con ancho proporcional a su duración,
@@ -78,9 +80,12 @@ export function tramosCarrera(): TramoCarrera[] {
     .sort((a, b) => a.desde.localeCompare(b.desde))
     .map((p) => {
       const d = duracion(p.desde, p.hasta);
+      const enElConsejo = p.organizacion === CONSEJO;
       return {
         clave: p.desde,
-        cargo: p.organizacion === CONSEJO ? p.cargoCorto : `${p.cargoCorto} · ${p.organizacion}`,
+        cargo: p.cargoCorto,
+        grupo: enElConsejo ? CONSEJO_SIGLA : p.organizacion,
+        grupoTexto: enElConsejo ? `${CONSEJO_SIGLA} · ${formatoCorto(experienciaTotal())}` : p.organizacion,
         texto: formatoCorto(d),
         periodo: `${formatoMes(p.desde)} a ${p.hasta ? formatoMes(p.hasta) : "la actualidad"}`,
         meses: d.totalMeses,
@@ -95,6 +100,8 @@ export function tramosCarrera(): TramoCarrera[] {
     periodo: `proyección de ${formatoMes(inicio)} a ${formatoMes(forecast.hasta)}`,
     meses: duracion(inicio, forecast.hasta).totalMeses,
     tipo: "proyeccion",
+    grupo: null,
+    grupoTexto: "",
   });
   return tramos;
 }

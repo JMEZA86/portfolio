@@ -40,6 +40,7 @@ export const persona = {
 
 // Organización del anillo "en el Consejo"
 export const CONSEJO = "Consejo Profesional de Ciencias Económicas de la CABA";
+export const CONSEJO_SIGLA = "CPCECABA"; // etiqueta corta para gráficos
 
 export const experiencia: Puesto[] = [
   {
