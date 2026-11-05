@@ -18,8 +18,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="es-AR" className={`${inter.variable} antialiased`} suppressHydrationWarning>
       <head>
-        {/* Habilita las animaciones CSS de revelado solo si hay JavaScript */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Habilita las animaciones CSS solo si hay JavaScript, y decide antes de pintar
+            si corresponde la intro (primera vez en la sesión y sin movimiento reducido) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "var d=document.documentElement;d.classList.add('js');try{if(!sessionStorage.getItem('intro-vista')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('intro-activa')}catch(e){}",
+          }}
+        />
       </head>
       <body className="min-h-dvh font-sans">
         <MotionProvider>{children}</MotionProvider>

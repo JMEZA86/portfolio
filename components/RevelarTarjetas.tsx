@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { esperarIntro } from "@/lib/intro";
 
 // Entrada suave de las tarjetas [data-card] la primera vez que aparecen.
 // La animación vive en CSS y se apaga sin JS o con prefers-reduced-motion.
@@ -20,8 +21,18 @@ export function RevelarTarjetas() {
       },
       { rootMargin: "0px 0px -8% 0px" },
     );
-    document.querySelectorAll("[data-card]").forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
+    let activo = true;
+    esperarIntro().then(
+      () =>
+        activo &&
+        document
+          .querySelectorAll("[data-card]")
+          .forEach((el) => obs.observe(el)),
+    );
+    return () => {
+      activo = false;
+      obs.disconnect();
+    };
   }, []);
   return null;
 }

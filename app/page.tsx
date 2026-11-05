@@ -4,7 +4,9 @@ import { Card } from "@/components/Card";
 import { ContactoFlotante } from "@/components/ContactoFlotante";
 import { DevTodo } from "@/components/DevTodo";
 import { Formacion } from "@/components/Formacion";
+import { Foto } from "@/components/Foto";
 import { Herramientas } from "@/components/Herramientas";
+import { Intro } from "@/components/Intro";
 import { LineaCarrera } from "@/components/LineaCarrera";
 import { Proyectos } from "@/components/Proyectos";
 import { Puestos } from "@/components/Puestos";
@@ -27,6 +29,17 @@ import {
 export default function Home() {
   return (
     <div className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 xl:pb-10">
+      <Intro
+        nombre={persona.nombre}
+        bajada={persona.bajada}
+        foto={
+          <Foto
+            className="relative size-28 rounded-full ring-4 ring-accent sm:size-36"
+            sizes="144px"
+            encuadre="object-cover object-[50%_15%] scale-110"
+          />
+        }
+      />
       <BarraSuperior nombre={persona.nombre} />
       <RevelarTarjetas />
 

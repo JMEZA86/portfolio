@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { esperarIntro } from "@/lib/intro";
 
 // Marca el elemento con data-visible la primera vez que entra en pantalla.
 // La animación vive en CSS (globals.css, [data-revelar]) y solo corre si hay JS
@@ -19,8 +20,13 @@ export function useRevelar<T extends HTMLElement>(umbral = 0.5) {
       },
       { threshold: umbral },
     );
-    obs.observe(el);
-    return () => obs.disconnect();
+    let activo = true;
+    // Si hay intro, se empieza a observar cuando termina
+    esperarIntro().then(() => activo && obs.observe(el));
+    return () => {
+      activo = false;
+      obs.disconnect();
+    };
   }, [umbral]);
   return ref;
 }
